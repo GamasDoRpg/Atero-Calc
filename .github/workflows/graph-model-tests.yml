@@ -44,5 +44,8 @@ jobs:
       - name: Run graph model tests
         run: node tests/graph-model.test.mjs
 
+      - name: Run plot model tests
+        run: node tests/plot-model.test.mjs
+
       - name: Run frontend structure tests
         run: node tests/frontend-structure.test.mjs
