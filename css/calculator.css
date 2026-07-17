@@ -1,99 +1,62 @@
 /* =========================================================
    ATERO CALC
-   Interface premium em azul
+   Inspirado na linguagem visual do Atero Write
    ========================================================= */
 
 
-/* ---------------------------------------------------------
-   VARIÁVEIS
-   --------------------------------------------------------- */
+/* =========================================================
+   Variáveis
+   ========================================================= */
 
 :root {
-  --background:
-    #07101f;
+  --calc-blue: #2f6fed;
+  --calc-blue-hover: #245dcc;
+  --calc-blue-active: #1d4fae;
 
-  --background-secondary:
-    #0a1629;
+  --calc-blue-soft: #eef4ff;
+  --calc-blue-soft-hover: #e3edff;
 
-  --surface:
-    rgba(15, 31, 55, 0.84);
+  --calc-blue-border:
+    rgba(47, 111, 237, 0.22);
 
-  --surface-strong:
-    rgba(17, 37, 66, 0.96);
+  --calc-black: #151515;
+  --calc-gray: #656565;
+  --calc-muted: #969696;
 
-  --surface-soft:
-    rgba(255, 255, 255, 0.045);
+  --calc-white: #ffffff;
+  --calc-surface: #f8f9fb;
+  --calc-surface-strong: #f3f5f8;
 
-  --surface-hover:
-    rgba(255, 255, 255, 0.075);
+  --calc-border: #e9edf2;
+  --calc-border-strong: #d8dee8;
 
-  --primary:
-    #3d8cff;
+  --calc-danger: #d93b4b;
+  --calc-danger-soft: #fff1f2;
+  --calc-danger-border:
+    rgba(217, 59, 75, 0.2);
 
-  --primary-light:
-    #73adff;
+  --calc-radius-small: 10px;
+  --calc-radius: 16px;
+  --calc-radius-large: 22px;
 
-  --primary-dark:
-    #1766d6;
+  --calc-content-width: 1120px;
+  --calc-header-width: 1240px;
 
-  --primary-glow:
-    rgba(61, 140, 255, 0.28);
-
-  --text:
-    #f5f8ff;
-
-  --text-secondary:
-    #aebbd0;
-
-  --text-muted:
-    #71819b;
-
-  --border:
-    rgba(143, 184, 255, 0.14);
-
-  --border-strong:
-    rgba(143, 184, 255, 0.28);
-
-  --danger:
-    #ff6b7a;
-
-  --danger-background:
-    rgba(255, 76, 97, 0.1);
-
-  --success:
-    #62dba7;
-
-  --header-height:
-    72px;
-
-  --content-width:
-    1280px;
-
-  --radius-small:
-    10px;
-
-  --radius-medium:
-    16px;
-
-  --radius-large:
-    24px;
-
-  --shadow-small:
-    0 8px 24px
-    rgba(0, 0, 0, 0.18);
-
-  --shadow-large:
-    0 30px 90px
-    rgba(0, 0, 0, 0.34);
-
-  --transition:
-    180ms ease;
+  --calc-font:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
 }
 
 
-/* ---------------------------------------------------------
-   RESET
-   --------------------------------------------------------- */
+/* =========================================================
+   Base
+   ========================================================= */
 
 *,
 *::before,
@@ -103,542 +66,339 @@
 
 html {
   min-height: 100%;
-  color-scheme: dark;
   scroll-behavior: smooth;
+}
+
+body,
+button,
+input {
+  font-family: var(--calc-font);
 }
 
 body {
   min-height: 100vh;
   margin: 0;
 
-  background:
-    radial-gradient(
-      circle at 18% 12%,
-      rgba(28, 103, 214, 0.23),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 88% 78%,
-      rgba(48, 128, 255, 0.14),
-      transparent 36%
-    ),
-    linear-gradient(
-      145deg,
-      var(--background) 0%,
-      var(--background-secondary) 55%,
-      #08111f 100%
-    );
+  color: var(--calc-black);
+  background: var(--calc-white);
 
-  color:
-    var(--text);
-
-  font-family:
-    Inter,
-    ui-sans-serif,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
-
-  line-height:
-    1.5;
-
-  -webkit-font-smoothing:
-    antialiased;
-
-  text-rendering:
-    optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 button,
 input {
-  font:
-    inherit;
+  font: inherit;
+}
+
+button {
+  color: inherit;
 }
 
 button,
 a {
-  -webkit-tap-highlight-color:
-    transparent;
-}
-
-button {
-  color:
-    inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
 a {
-  color:
-    inherit;
+  color: inherit;
+  text-decoration: none;
 }
 
 img {
-  display:
-    block;
-
-  max-width:
-    100%;
+  display: block;
+  max-width: 100%;
 }
 
 [hidden] {
-  display:
-    none !important;
+  display: none !important;
 }
 
 
-/* ---------------------------------------------------------
-   ACESSIBILIDADE
-   --------------------------------------------------------- */
+/* =========================================================
+   Acessibilidade
+   ========================================================= */
 
 .sr-only {
-  position:
-    absolute;
+  position: absolute;
 
-  width:
-    1px;
+  width: 1px;
+  height: 1px;
 
-  height:
-    1px;
+  padding: 0;
+  margin: -1px;
 
-  padding:
-    0;
+  overflow: hidden;
 
-  margin:
-    -1px;
+  clip: rect(0, 0, 0, 0);
 
-  overflow:
-    hidden;
+  white-space: nowrap;
 
-  clip:
-    rect(0, 0, 0, 0);
-
-  white-space:
-    nowrap;
-
-  border:
-    0;
+  border: 0;
 }
 
-:focus-visible {
+.app-brand:focus-visible,
+#settings-button:focus-visible,
+#expression-input:focus-visible,
+#clear-button:focus-visible,
+#calculate-button:focus-visible,
+#clear-history-button:focus-visible,
+.app-footer a:focus-visible,
+#history-list li:focus-visible {
   outline:
     3px solid
-    rgba(115, 173, 255, 0.75);
+    var(--calc-blue-border);
 
-  outline-offset:
-    3px;
+  outline-offset: 3px;
 }
 
 
-/* ---------------------------------------------------------
-   ESTRUTURA GERAL
-   --------------------------------------------------------- */
+/* =========================================================
+   Estrutura
+   ========================================================= */
 
 .app-shell {
-  min-height:
-    100vh;
+  min-height: 100vh;
 
-  display:
-    grid;
+  display: grid;
 
   grid-template-rows:
-    auto 1fr auto;
+    auto
+    1fr
+    auto;
 }
 
 
-/* ---------------------------------------------------------
-   HEADER
-   --------------------------------------------------------- */
+/* =========================================================
+   Cabeçalho
+   ========================================================= */
 
 .app-header {
-  position:
-    sticky;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 
-  top:
-    0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  z-index:
-    100;
+  width: 100%;
+  min-height: 76px;
 
-  min-height:
-    var(--header-height);
-
-  display:
-    flex;
-
-  align-items:
-    center;
-
-  justify-content:
-    space-between;
-
-  gap:
-    24px;
-
-  padding:
-    12px max(
+  padding-inline:
+    max(
       24px,
       calc(
-        (100vw - var(--content-width)) / 2
+        (100vw - var(--calc-header-width)) / 2
       )
     );
 
   background:
-    rgba(7, 16, 31, 0.72);
+    rgba(255, 255, 255, 0.94);
 
   border-bottom:
     1px solid
-    var(--border);
+    var(--calc-border);
 
-  backdrop-filter:
-    blur(20px);
-
-  -webkit-backdrop-filter:
-    blur(20px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
 .app-brand {
-  display:
-    inline-flex;
+  display: flex;
+  align-items: center;
 
-  align-items:
-    center;
+  gap: 11px;
 
-  gap:
-    12px;
-
-  color:
-    var(--text);
-
-  text-decoration:
-    none;
-
-  font-size:
-    1.05rem;
-
-  font-weight:
-    760;
-
-  letter-spacing:
-    -0.025em;
+  color: var(--calc-black);
 }
 
 .app-brand img {
-  width:
-    42px;
+  width: 48px;
+  height: 48px;
 
-  height:
-    42px;
-
-  object-fit:
-    contain;
-
-  border-radius:
-    12px;
-
-  box-shadow:
-    0 8px 28px
-    rgba(40, 122, 255, 0.2);
+  object-fit: contain;
 }
 
 .app-brand span {
-  white-space:
-    nowrap;
+  font-size: 0.94rem;
+  font-weight: 750;
+
+  letter-spacing: -0.025em;
 }
 
 .app-user {
-  display:
-    flex;
+  display: flex;
+  align-items: center;
 
-  align-items:
-    center;
-
-  gap:
-    14px;
+  gap: 10px;
 }
 
 #user-name {
-  max-width:
-    260px;
+  display: block;
 
-  overflow:
-    hidden;
+  max-width: 230px;
 
-  color:
-    var(--text-secondary);
+  overflow: hidden;
 
-  font-size:
-    0.9rem;
+  color: var(--calc-muted);
 
-  text-overflow:
-    ellipsis;
+  font-size: 0.72rem;
+  font-weight: 550;
 
-  white-space:
-    nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #settings-button {
-  min-height:
-    40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  padding:
-    0 16px;
+  min-height: 40px;
 
-  border:
-    1px solid
-    var(--border);
+  padding: 0 14px;
 
-  border-radius:
-    999px;
+  color: var(--calc-gray);
+  background: transparent;
 
-  background:
-    var(--surface-soft);
+  border: 0;
+  border-radius: 999px;
 
-  color:
-    var(--text-secondary);
+  font-size: 0.77rem;
+  font-weight: 650;
 
-  font-size:
-    0.88rem;
-
-  font-weight:
-    650;
-
-  cursor:
-    pointer;
+  cursor: pointer;
 
   transition:
-    background var(--transition),
-    border-color var(--transition),
-    color var(--transition),
-    transform var(--transition);
+    color 150ms ease,
+    background-color 150ms ease,
+    transform 150ms ease;
 }
 
 #settings-button:hover {
-  background:
-    var(--surface-hover);
+  color: var(--calc-black);
+  background: var(--calc-surface);
+}
 
-  border-color:
-    var(--border-strong);
-
-  color:
-    var(--text);
-
-  transform:
-    translateY(-1px);
+#settings-button:active {
+  transform: scale(0.97);
 }
 
 
-/* ---------------------------------------------------------
-   ÁREA PRINCIPAL
-   --------------------------------------------------------- */
+/* =========================================================
+   Área principal
+   ========================================================= */
 
 .calculator-workspace {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.55fr)
+    minmax(270px, 0.75fr);
+
   width:
     min(
       calc(100% - 48px),
-      var(--content-width)
+      var(--calc-content-width)
     );
 
-  margin:
-    0 auto;
+  min-height:
+    calc(100vh - 162px);
 
-  display:
-    grid;
+  margin-inline: auto;
 
-  grid-template-columns:
-    minmax(0, 1.6fr)
-    minmax(280px, 0.8fr);
-
-  align-items:
-    start;
-
-  gap:
-    24px;
-
-  padding:
-    56px 0 72px;
+  padding: 54px 0 96px;
 }
 
 
-/* ---------------------------------------------------------
-   PAINÉIS
-   --------------------------------------------------------- */
-
-.calculator,
-.history-panel {
-  position:
-    relative;
-
-  overflow:
-    hidden;
-
-  border:
-    1px solid
-    var(--border);
-
-  background:
-    linear-gradient(
-      145deg,
-      rgba(18, 39, 70, 0.91),
-      rgba(10, 23, 42, 0.88)
-    );
-
-  box-shadow:
-    var(--shadow-large);
-
-  backdrop-filter:
-    blur(20px);
-
-  -webkit-backdrop-filter:
-    blur(20px);
-}
-
-.calculator::before,
-.history-panel::before {
-  content:
-    "";
-
-  position:
-    absolute;
-
-  inset:
-    0 auto auto 0;
-
-  width:
-    100%;
-
-  height:
-    1px;
-
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(137, 188, 255, 0.55),
-      transparent
-    );
-
-  pointer-events:
-    none;
-}
+/* =========================================================
+   Calculadora
+   ========================================================= */
 
 .calculator {
-  min-height:
-    460px;
+  min-width: 0;
 
-  padding:
-    32px;
+  padding-right: 48px;
 
-  border-radius:
-    var(--radius-large);
+  border-right:
+    1px solid
+    var(--calc-border);
 }
-
-.history-panel {
-  min-height:
-    460px;
-
-  padding:
-    26px;
-
-  border-radius:
-    var(--radius-large);
-}
-
-
-/* ---------------------------------------------------------
-   DISPLAY DA CALCULADORA
-   --------------------------------------------------------- */
 
 .calculator-display {
-  position:
-    relative;
+  position: relative;
 
-  display:
-    grid;
+  display: grid;
 
-  gap:
-    14px;
+  grid-template-rows:
+    auto
+    minmax(140px, 1fr);
 
-  min-height:
-    228px;
+  gap: 20px;
 
-  padding:
-    30px;
+  min-height: 250px;
 
-  border:
-    1px solid
-    rgba(139, 186, 255, 0.16);
-
-  border-radius:
-    20px;
+  padding: 28px 30px 30px;
 
   background:
     linear-gradient(
-      145deg,
-      rgba(5, 14, 28, 0.88),
-      rgba(9, 25, 48, 0.76)
+      180deg,
+      #fbfcfe 0%,
+      var(--calc-surface) 100%
     );
 
-  box-shadow:
-    inset 0 1px 0
-    rgba(255, 255, 255, 0.04),
-    inset 0 -20px 60px
-    rgba(0, 0, 0, 0.16);
-}
-
-.calculator-display::after {
-  content:
-    "";
-
-  position:
-    absolute;
-
-  right:
-    20px;
-
-  top:
-    20px;
-
-  width:
-    8px;
-
-  height:
-    8px;
+  border:
+    1px solid
+    var(--calc-border);
 
   border-radius:
-    50%;
-
-  background:
-    var(--primary);
+    var(--calc-radius-large);
 
   box-shadow:
-    0 0 18px
-    var(--primary);
+    0 18px 50px
+    rgba(27, 46, 80, 0.055);
+
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
 }
 
+.calculator-display:focus-within {
+  border-color:
+    var(--calc-blue-border);
+
+  box-shadow:
+    0 18px 50px
+    rgba(27, 46, 80, 0.06),
+    0 0 0 4px
+    rgba(47, 111, 237, 0.055);
+}
+
+
+/* =========================================================
+   Entrada
+   ========================================================= */
+
 #expression-input {
-  width:
-    100%;
+  display: block;
 
-  min-height:
-    54px;
+  width: 100%;
+  min-height: 45px;
 
-  padding:
-    0;
+  padding: 0 42px 10px 0;
 
-  border:
-    0;
+  color: var(--calc-gray);
+  background: transparent;
 
-  outline:
-    0;
+  border: 0;
+  border-bottom:
+    1px solid
+    var(--calc-border);
 
-  background:
-    transparent;
+  border-radius: 0;
 
-  color:
-    var(--text-secondary);
+  outline: none;
 
   font-family:
     "SFMono-Regular",
@@ -646,695 +406,701 @@ img {
     "Liberation Mono",
     monospace;
 
-  font-size:
-    clamp(
-      1rem,
-      2vw,
-      1.2rem
-    );
+  font-size: 1rem;
+  font-weight: 500;
 
-  letter-spacing:
-    -0.02em;
+  letter-spacing: -0.025em;
+
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
 }
 
 #expression-input::placeholder {
-  color:
-    var(--text-muted);
+  color: var(--calc-muted);
+}
+
+#expression-input:focus {
+  color: var(--calc-black);
+
+  border-bottom-color:
+    var(--calc-blue-border);
 }
 
 #expression-input:disabled {
-  opacity:
-    0.7;
-
-  cursor:
-    wait;
+  opacity: 0.6;
+  cursor: wait;
 }
 
+
+/* Pequeno indicador azul */
+
+.calculator-display::after {
+  content: "";
+
+  position: absolute;
+
+  top: 36px;
+  right: 30px;
+
+  width: 7px;
+  height: 7px;
+
+  background: var(--calc-blue);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 5px
+    var(--calc-blue-soft);
+}
+
+
+/* =========================================================
+   Resultado
+   ========================================================= */
+
 #calculation-result {
-  align-self:
-    end;
+  align-self: end;
 
-  display:
-    block;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 
-  max-width:
-    100%;
+  width: 100%;
+  min-width: 0;
+  min-height: 120px;
 
-  overflow:
-    hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 
-  color:
-    var(--text);
+  color: var(--calc-black);
 
   font-size:
     clamp(
-      2.6rem,
+      2.8rem,
       7vw,
-      5.7rem
+      5.6rem
     );
 
-  font-weight:
-    720;
+  font-weight: 730;
+  line-height: 1;
 
-  line-height:
-    1;
+  letter-spacing: -0.065em;
 
-  letter-spacing:
-    -0.065em;
+  text-align: right;
+  white-space: nowrap;
 
-  text-align:
-    right;
+  font-variant-numeric:
+    tabular-nums lining-nums;
 
-  text-overflow:
-    ellipsis;
+  scrollbar-width: thin;
 
-  white-space:
-    nowrap;
+  scrollbar-color:
+    var(--calc-border-strong)
+    transparent;
+}
 
-  text-shadow:
-    0 0 40px
-    rgba(79, 148, 255, 0.14);
+#calculation-result::-webkit-scrollbar {
+  height: 5px;
+}
+
+#calculation-result::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#calculation-result::-webkit-scrollbar-thumb {
+  background: var(--calc-border-strong);
+  border-radius: 999px;
 }
 
 
-/* ---------------------------------------------------------
-   BOTÕES PRINCIPAIS
-   --------------------------------------------------------- */
+/* =========================================================
+   Ações
+   ========================================================= */
 
 .calculator-actions {
-  display:
-    grid;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 
-  grid-template-columns:
-    minmax(120px, 0.6fr)
-    minmax(160px, 1fr);
+  gap: 10px;
 
-  gap:
-    14px;
-
-  margin-top:
-    20px;
+  margin-top: 18px;
 }
 
 .calculator-actions button {
-  min-height:
-    54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  padding:
-    0 24px;
+  min-height: 44px;
+
+  padding: 0 19px;
 
   border:
     1px solid
     transparent;
 
-  border-radius:
-    14px;
+  border-radius: 999px;
 
-  font-weight:
-    720;
+  font-size: 0.79rem;
+  font-weight: 700;
 
-  cursor:
-    pointer;
+  cursor: pointer;
 
   transition:
-    transform var(--transition),
-    box-shadow var(--transition),
-    background var(--transition),
-    border-color var(--transition),
-    color var(--transition),
-    opacity var(--transition);
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease,
+    opacity 150ms ease;
 }
 
 #clear-button {
+  color: var(--calc-black);
+  background: var(--calc-white);
+
   border-color:
-    var(--border);
-
-  background:
-    rgba(255, 255, 255, 0.045);
-
-  color:
-    var(--text-secondary);
+    var(--calc-border-strong);
 }
 
 #clear-button:hover {
-  border-color:
-    var(--border-strong);
+  background: var(--calc-surface);
 
-  background:
-    rgba(255, 255, 255, 0.075);
+  border-color: #c9d1dc;
 
-  color:
-    var(--text);
-
-  transform:
-    translateY(-2px);
+  transform: translateY(-1px);
 }
 
 #calculate-button {
-  background:
-    linear-gradient(
-      135deg,
-      var(--primary-light),
-      var(--primary),
-      var(--primary-dark)
-    );
+  min-width: 120px;
 
-  color:
-    #ffffff;
+  color: var(--calc-white);
+  background: var(--calc-blue);
+
+  border-color: var(--calc-blue);
 
   box-shadow:
-    0 14px 34px
-    var(--primary-glow),
-    inset 0 1px 0
-    rgba(255, 255, 255, 0.28);
+    0 9px 24px
+    rgba(47, 111, 237, 0.18);
 }
 
 #calculate-button:hover {
-  transform:
-    translateY(-2px);
+  background: var(--calc-blue-hover);
+
+  border-color:
+    var(--calc-blue-hover);
 
   box-shadow:
-    0 18px 44px
-    rgba(43, 126, 255, 0.36),
-    inset 0 1px 0
-    rgba(255, 255, 255, 0.3);
+    0 12px 28px
+    rgba(47, 111, 237, 0.24);
+
+  transform: translateY(-1px);
 }
 
 #calculate-button:active,
 #clear-button:active {
   transform:
-    translateY(0);
+    translateY(0)
+    scale(0.98);
 }
 
 .calculator-actions button:disabled {
-  opacity:
-    0.58;
+  opacity: 0.55;
 
-  cursor:
-    wait;
+  cursor: wait;
 
-  transform:
-    none;
-
-  box-shadow:
-    none;
+  transform: none;
+  box-shadow: none;
 }
 
 
-/* ---------------------------------------------------------
-   ERROS
-   --------------------------------------------------------- */
+/* =========================================================
+   Erro
+   ========================================================= */
 
 .calculator-error {
-  margin:
-    18px 0 0;
+  margin: 18px 0 0;
 
-  padding:
-    14px 16px;
+  padding: 13px 15px;
+
+  color: var(--calc-danger);
+  background: var(--calc-danger-soft);
 
   border:
     1px solid
-    rgba(255, 107, 122, 0.25);
+    var(--calc-danger-border);
 
   border-radius:
-    12px;
+    var(--calc-radius-small);
 
-  background:
-    var(--danger-background);
+  font-size: 0.76rem;
+  font-weight: 550;
 
-  color:
-    #ffabb4;
-
-  font-size:
-    0.92rem;
-
-  line-height:
-    1.5;
+  line-height: 1.55;
 }
 
 
-/* ---------------------------------------------------------
-   HISTÓRICO
-   --------------------------------------------------------- */
+/* =========================================================
+   Histórico
+   ========================================================= */
+
+.history-panel {
+  min-width: 0;
+
+  padding-left: 48px;
+}
 
 .history-header {
-  display:
-    flex;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 
-  align-items:
-    center;
+  gap: 20px;
 
-  justify-content:
-    space-between;
-
-  gap:
-    18px;
-
-  padding-bottom:
-    20px;
+  padding-bottom: 18px;
 
   border-bottom:
     1px solid
-    var(--border);
+    var(--calc-border);
 }
 
 .history-header h2 {
-  margin:
-    0;
+  margin: 0;
 
-  color:
-    var(--text);
+  color: var(--calc-black);
 
-  font-size:
-    1.05rem;
+  font-size: 1rem;
+  font-weight: 750;
 
-  font-weight:
-    720;
-
-  letter-spacing:
-    -0.025em;
+  letter-spacing: -0.025em;
 }
 
 #clear-history-button {
-  min-height:
-    34px;
+  min-height: 34px;
 
-  padding:
-    0 12px;
+  padding: 0 11px;
+
+  color: var(--calc-muted);
+  background: transparent;
 
   border:
     1px solid
     transparent;
 
-  border-radius:
-    9px;
+  border-radius: 999px;
 
-  background:
-    transparent;
+  font-size: 0.7rem;
+  font-weight: 650;
 
-  color:
-    var(--text-muted);
-
-  font-size:
-    0.82rem;
-
-  cursor:
-    pointer;
+  cursor: pointer;
 
   transition:
-    background var(--transition),
-    color var(--transition),
-    border-color var(--transition);
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease;
 }
 
 #clear-history-button:hover {
+  color: var(--calc-black);
+  background: var(--calc-surface);
+
   border-color:
-    var(--border);
-
-  background:
-    var(--surface-soft);
-
-  color:
-    var(--text-secondary);
+    var(--calc-border);
 }
 
+
+/* =========================================================
+   Lista do histórico
+   ========================================================= */
+
 #history-list {
-  display:
-    grid;
+  display: grid;
 
-  gap:
-    10px;
+  gap: 0;
 
-  max-height:
-    500px;
+  max-height: 470px;
 
-  margin:
-    20px 0 0;
+  margin: 0;
+  padding: 0;
 
-  padding:
-    0;
+  overflow-y: auto;
 
-  overflow-y:
-    auto;
+  list-style: none;
 
-  list-style:
-    none;
-
-  scrollbar-width:
-    thin;
+  scrollbar-width: thin;
 
   scrollbar-color:
-    rgba(103, 164, 255, 0.35)
+    var(--calc-border-strong)
     transparent;
 }
 
 #history-list::-webkit-scrollbar {
-  width:
-    7px;
+  width: 5px;
 }
 
 #history-list::-webkit-scrollbar-track {
-  background:
-    transparent;
+  background: transparent;
 }
 
 #history-list::-webkit-scrollbar-thumb {
-  border-radius:
-    999px;
+  background: var(--calc-border-strong);
+  border-radius: 999px;
+}
 
-  background:
-    rgba(103, 164, 255, 0.32);
+
+/* Histórico vazio */
+
+#history-list:empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 250px;
+
+  margin-top: 20px;
+
+  background: var(--calc-white);
+
+  border:
+    1px dashed
+    var(--calc-border-strong);
+
+  border-radius:
+    var(--calc-radius);
 }
 
 #history-list:empty::before {
   content:
     "Seus cálculos aparecerão aqui.";
 
-  display:
-    block;
+  max-width: 190px;
 
-  padding:
-    34px 18px;
+  padding: 32px 20px;
 
-  color:
-    var(--text-muted);
+  color: var(--calc-muted);
 
-  font-size:
-    0.9rem;
+  font-size: 0.74rem;
+  line-height: 1.55;
 
-  line-height:
-    1.6;
-
-  text-align:
-    center;
+  text-align: center;
 }
 
+
+/* Item do histórico */
+
 #history-list li {
-  display:
-    grid;
+  position: relative;
 
-  gap:
-    6px;
+  display: grid;
 
-  padding:
-    14px 15px;
+  gap: 7px;
 
-  border:
+  padding: 17px 4px;
+
+  border-bottom:
     1px solid
-    transparent;
+    var(--calc-border);
 
-  border-radius:
-    12px;
-
-  background:
-    rgba(255, 255, 255, 0.035);
+  cursor: pointer;
 
   transition:
-    background var(--transition),
-    border-color var(--transition),
-    transform var(--transition);
+    padding-left 150ms ease,
+    background-color 150ms ease;
+}
+
+#history-list li:last-child {
+  border-bottom: 0;
 }
 
 #history-list li:hover {
-  border-color:
-    var(--border);
+  padding-left: 10px;
 
   background:
-    rgba(255, 255, 255, 0.06);
-
-  transform:
-    translateY(-1px);
+    linear-gradient(
+      90deg,
+      var(--calc-blue-soft),
+      transparent 90%
+    );
 }
 
 .history-expression {
-  overflow:
-    hidden;
+  overflow: hidden;
 
-  color:
-    var(--text-muted);
+  color: var(--calc-muted);
 
   font-family:
     "SFMono-Regular",
     Consolas,
+    "Liberation Mono",
     monospace;
 
-  font-size:
-    0.82rem;
+  font-size: 0.72rem;
+  font-weight: 500;
 
-  text-overflow:
-    ellipsis;
-
-  white-space:
-    nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .history-result {
-  overflow-wrap:
-    anywhere;
+  overflow: hidden;
 
-  color:
-    var(--text);
+  color: var(--calc-black);
 
-  font-size:
-    1.05rem;
+  font-size: 1rem;
+  font-weight: 720;
 
-  font-weight:
-    700;
+  letter-spacing: -0.025em;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-variant-numeric:
+    tabular-nums lining-nums;
 }
 
 
-/* ---------------------------------------------------------
-   FOOTER
-   --------------------------------------------------------- */
+/* Pequena marca no hover */
+
+#history-list li::before {
+  content: "";
+
+  position: absolute;
+
+  top: 20px;
+  left: 0;
+
+  width: 3px;
+  height: 0;
+
+  background: var(--calc-blue);
+
+  border-radius: 999px;
+
+  transition:
+    height 150ms ease;
+}
+
+#history-list li:hover::before {
+  height: 28px;
+}
+
+
+/* =========================================================
+   Rodapé
+   ========================================================= */
 
 .app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   width:
     min(
       calc(100% - 48px),
-      var(--content-width)
+      var(--calc-header-width)
     );
 
-  margin:
-    0 auto;
+  min-height: 86px;
 
-  display:
-    flex;
+  margin-inline: auto;
 
-  align-items:
-    center;
-
-  justify-content:
-    space-between;
-
-  gap:
-    18px;
-
-  min-height:
-    72px;
-
-  padding:
-    18px 0;
+  color: var(--calc-muted);
 
   border-top:
     1px solid
-    var(--border);
+    var(--calc-border);
 
-  color:
-    var(--text-muted);
+  font-size: 0.67rem;
+}
 
-  font-size:
-    0.84rem;
+.app-footer span {
+  color: var(--calc-gray);
+
+  font-weight: 650;
 }
 
 .app-footer a {
-  color:
-    var(--text-secondary);
-
-  text-decoration:
-    none;
-
   transition:
-    color var(--transition);
+    color 150ms ease;
 }
 
 .app-footer a:hover {
-  color:
-    var(--primary-light);
+  color: var(--calc-blue);
 }
 
 
-/* ---------------------------------------------------------
-   RESPONSIVIDADE
-   --------------------------------------------------------- */
+/* =========================================================
+   Responsividade
+   ========================================================= */
 
-@media (max-width: 940px) {
+@media (max-width: 900px) {
   .calculator-workspace {
-    grid-template-columns:
-      1fr;
+    grid-template-columns: 1fr;
 
-    max-width:
-      760px;
-  }
-
-  .history-panel {
-    min-height:
-      auto;
-  }
-
-  #history-list {
-    max-height:
-      320px;
-  }
-}
-
-
-@media (max-width: 680px) {
-  :root {
-    --header-height:
-      64px;
-  }
-
-  .app-header {
-    padding:
-      10px 18px;
-  }
-
-  .app-brand img {
-    width:
-      38px;
-
-    height:
-      38px;
-  }
-
-  .app-brand span {
-    font-size:
-      0.96rem;
-  }
-
-  #user-name {
-    display:
-      none;
-  }
-
-  #settings-button {
-    min-height:
-      38px;
-
-    padding:
-      0 13px;
-  }
-
-  .calculator-workspace {
-    width:
-      min(
-        calc(100% - 28px),
-        var(--content-width)
-      );
-
-    gap:
-      16px;
-
-    padding:
-      28px 0 48px;
-  }
-
-  .calculator,
-  .history-panel {
-    border-radius:
-      19px;
+    max-width: 720px;
   }
 
   .calculator {
-    min-height:
-      auto;
+    padding-right: 0;
+    padding-bottom: 46px;
 
-    padding:
-      18px;
+    border-right: 0;
+    border-bottom:
+      1px solid
+      var(--calc-border);
   }
 
   .history-panel {
-    padding:
-      20px;
+    padding-top: 46px;
+    padding-left: 0;
+  }
+
+  #history-list {
+    max-height: 360px;
+  }
+
+  #history-list:empty {
+    min-height: 190px;
+  }
+}
+
+
+@media (max-width: 620px) {
+  .app-header {
+    min-height: 70px;
+
+    padding-inline: 15px;
+  }
+
+  .app-brand img {
+    width: 43px;
+    height: 43px;
+  }
+
+  .app-brand span {
+    font-size: 0.86rem;
+  }
+
+  #user-name {
+    display: none;
+  }
+
+  #settings-button {
+    min-height: 38px;
+
+    padding: 0 12px;
+  }
+
+  .calculator-workspace {
+    width: calc(100% - 30px);
+
+    padding: 34px 0 64px;
+  }
+
+  .calculator {
+    padding-bottom: 40px;
   }
 
   .calculator-display {
-    min-height:
-      198px;
+    grid-template-rows:
+      auto
+      minmax(110px, 1fr);
 
-    padding:
-      24px 20px;
+    min-height: 215px;
 
-    border-radius:
-      16px;
+    padding: 23px 20px 24px;
+
+    border-radius: var(--calc-radius);
+  }
+
+  .calculator-display::after {
+    top: 31px;
+    right: 20px;
+  }
+
+  #expression-input {
+    padding-right: 34px;
+
+    font-size: 0.9rem;
+  }
+
+  #calculation-result {
+    min-height: 100px;
+
+    font-size:
+      clamp(
+        2.5rem,
+        14vw,
+        4.1rem
+      );
+  }
+
+  .calculator-actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .calculator-actions button {
+    width: 100%;
+  }
+
+  .history-panel {
+    padding-top: 40px;
+  }
+
+  .app-footer {
+    width: calc(100% - 30px);
+    min-height: 76px;
+  }
+}
+
+
+@media (max-width: 420px) {
+  .app-brand span {
+    display: none;
+  }
+
+  .calculator-display {
+    min-height: 200px;
+
+    padding-inline: 17px;
+  }
+
+  .calculator-display::after {
+    right: 17px;
   }
 
   #calculation-result {
     font-size:
       clamp(
-        2.4rem,
-        14vw,
-        4.2rem
+        2.25rem,
+        15vw,
+        3.7rem
       );
   }
 
   .app-footer {
-    width:
-      calc(100% - 36px);
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
 
-    flex-direction:
-      column;
-
-    justify-content:
-      center;
-
-    padding:
-      24px 0;
-
-    text-align:
-      center;
+    gap: 5px;
   }
 }
 
 
-@media (max-width: 440px) {
-  .calculator-actions {
-    grid-template-columns:
-      1fr;
-  }
-
-  #calculate-button {
-    grid-row:
-      1;
-  }
-
-  #clear-button {
-    grid-row:
-      2;
-  }
-
-  .calculator-display {
-    min-height:
-      180px;
-  }
-
-  #expression-input {
-    font-size:
-      0.94rem;
-  }
-}
-
-
-/* ---------------------------------------------------------
-   PREFERÊNCIA POR MENOS ANIMAÇÕES
-   --------------------------------------------------------- */
+/* =========================================================
+   Menos animações
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
-    scroll-behavior:
-      auto !important;
+    scroll-behavior: auto !important;
 
     animation-duration:
       0.01ms !important;
