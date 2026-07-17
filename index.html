@@ -1,52 +1,179 @@
+<!DOCTYPE html>
 <html
   lang="pt-BR"
   data-access-state="checking"
 >
   <head>
+    <meta charset="UTF-8">
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+      name="description"
+      content="Atero Calc — calculadora do ecossistema Atero."
+    >
+
+    <title>Atero Calc</title>
+
+    <link
+      rel="icon"
+      href="assets/logos/calc.png"
+    >
+
     <link
       rel="stylesheet"
       href="css/access-guard.css?v=1"
     >
-  </head>
-  <main>
-    <body>
 
-      <section
-        class="atero-access-screen"
-        id="atero-access-screen"
-        role="status"
-        aria-live="polite"
-      >
-        <div class="atero-access-card">
-          <div
-            class="atero-access-spinner"
-            aria-hidden="true"
-          ></div>
-    
-          <h1>Verificando acesso</h1>
-    
-          <p>
-            Preparando o aplicativo.
-          </p>
-        </div>
-      </section>
-    
-    
-      <div class="app-shell">
-    
-        <!--
-          Todo o header, main, dialogs
-          e footer do aplicativo ficam aqui.
-        -->
-    
+    <link
+      rel="stylesheet"
+      href="css/global.css?v=1"
+    >
+
+    <link
+      rel="stylesheet"
+      href="css/calculator.css?v=1"
+    >
+  </head>
+
+  <body>
+    <section
+      class="atero-access-screen"
+      id="atero-access-screen"
+      role="status"
+      aria-live="polite"
+    >
+      <div class="atero-access-card">
+        <div
+          class="atero-access-spinner"
+          aria-hidden="true"
+        ></div>
+
+        <h1>Verificando acesso</h1>
+
+        <p>
+          Preparando o Atero Calc.
+        </p>
       </div>
-    
-    
-      <script
-        type="module"
-        src="js/bootstrap.js?v=1"
-      ></script>
-    
-    </body>
-  </main>
+    </section>
+
+    <div class="app-shell">
+      <header class="app-header">
+        <a
+          class="app-brand"
+          href="https://atero.space"
+          aria-label="Voltar ao Atero"
+        >
+          <img
+            src="assets/logos/calc.png"
+            alt=""
+          >
+
+          <span>Atero Calc</span>
+        </a>
+
+        <div class="app-user">
+          <span id="user-name"></span>
+
+          <button
+            type="button"
+            id="settings-button"
+            aria-label="Abrir configurações"
+          >
+            Configurações
+          </button>
+        </div>
+      </header>
+
+      <main class="calculator-workspace">
+        <section
+          class="calculator"
+          aria-label="Calculadora"
+        >
+          <div class="calculator-display">
+            <label
+              class="sr-only"
+              for="expression-input"
+            >
+              Expressão matemática
+            </label>
+
+            <input
+              id="expression-input"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Digite uma expressão"
+              maxlength="500"
+            >
+
+            <output
+              id="calculation-result"
+              aria-live="polite"
+            >
+              0
+            </output>
+          </div>
+
+          <div class="calculator-actions">
+            <button
+              id="clear-button"
+              type="button"
+            >
+              Limpar
+            </button>
+
+            <button
+              id="calculate-button"
+              type="button"
+            >
+              Calcular
+            </button>
+          </div>
+
+          <p
+            id="calculation-error"
+            class="calculator-error"
+            role="alert"
+            hidden
+          ></p>
+        </section>
+
+        <aside
+          class="history-panel"
+          aria-label="Histórico de cálculos"
+        >
+          <div class="history-header">
+            <h2>Histórico</h2>
+
+            <button
+              id="clear-history-button"
+              type="button"
+            >
+              Limpar
+            </button>
+          </div>
+
+          <ol id="history-list"></ol>
+        </aside>
+      </main>
+
+      <footer class="app-footer">
+        <span>Atero Calc</span>
+
+        <a href="https://atero.space">
+          Ecossistema Atero
+        </a>
+      </footer>
+    </div>
+
+    <script
+      type="module"
+      src="js/bootstrap.js?v=1"
+    ></script>
+  </body>
 </html>
