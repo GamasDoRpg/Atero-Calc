@@ -6,9 +6,19 @@ import {
   iniciarCanvas
 } from "./canvas.js?v=1";
 
+import {
+  iniciarGraph
+} from "./plot.js?v=1";
+
 
 const VIEW_STORAGE_KEY =
   "atero-calc-active-view-v1";
+
+const VALID_VIEWS = new Set([
+  "calculator",
+  "canvas",
+  "plot"
+]);
 
 
 function mostrarUsuario(usuario) {
@@ -33,8 +43,8 @@ function loadActiveView() {
       VIEW_STORAGE_KEY
     );
 
-    return value === "canvas"
-      ? "canvas"
+    return VALID_VIEWS.has(value)
+      ? value
       : "calculator";
   } catch {
     return "calculator";
@@ -54,7 +64,10 @@ function saveActiveView(view) {
 }
 
 
-function iniciarNavegacao(canvasController) {
+function iniciarNavegacao({
+  canvasController,
+  plotController
+}) {
   const tabs = [
     ...document.querySelectorAll(
       "[data-app-view]"
@@ -68,13 +81,17 @@ function iniciarNavegacao(canvasController) {
   ];
 
   function showView(viewName, { persist = true } = {}) {
+    const safeView = VALID_VIEWS.has(viewName)
+      ? viewName
+      : "calculator";
+
     for (const view of views) {
-      const active = view.dataset.view === viewName;
+      const active = view.dataset.view === safeView;
       view.hidden = !active;
     }
 
     for (const tab of tabs) {
-      const active = tab.dataset.appView === viewName;
+      const active = tab.dataset.appView === safeView;
 
       tab.classList.toggle("is-active", active);
       tab.setAttribute(
@@ -83,14 +100,18 @@ function iniciarNavegacao(canvasController) {
       );
     }
 
-    document.documentElement.dataset.calcView = viewName;
+    document.documentElement.dataset.calcView = safeView;
 
     if (persist) {
-      saveActiveView(viewName);
+      saveActiveView(safeView);
     }
 
-    if (viewName === "canvas") {
+    if (safeView === "canvas") {
       canvasController?.refresh?.();
+    }
+
+    if (safeView === "plot") {
+      plotController?.refresh?.();
     }
   }
 
@@ -124,5 +145,13 @@ export async function iniciarAplicativo({
     aplicativo
   });
 
-  iniciarNavegacao(canvasController);
+  const plotController = iniciarGraph({
+    usuario,
+    aplicativo
+  });
+
+  iniciarNavegacao({
+    canvasController,
+    plotController
+  });
 }
