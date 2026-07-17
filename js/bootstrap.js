@@ -14,7 +14,7 @@ async function iniciar() {
   }
 
   const modulo = await import(
-    "./app.js?v=3"
+    "./app.js?v=4"
   );
 
   await modulo.iniciarAplicativo({
