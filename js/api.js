@@ -54,12 +54,32 @@ async function requestJson(
   path,
   {
     method = "GET",
-    body = null
+    body = null,
+    signal = null
   } = {}
 ) {
   const controller = new AbortController();
+  let timeoutTriggered = false;
+
+  const abortFromCaller = () => {
+    controller.abort();
+  };
+
+  if (signal?.aborted) {
+    controller.abort();
+  } else {
+    signal?.addEventListener(
+      "abort",
+      abortFromCaller,
+      { once: true }
+    );
+  }
+
   const timeoutId = window.setTimeout(
-    () => controller.abort(),
+    () => {
+      timeoutTriggered = true;
+      controller.abort();
+    },
     REQUEST_TIMEOUT_MS
   );
 
@@ -102,6 +122,13 @@ async function requestJson(
     return data;
   } catch (error) {
     if (error?.name === "AbortError") {
+      if (signal?.aborted && !timeoutTriggered) {
+        throw new AteroApiError(
+          "A requisição foi substituída por uma atualização mais recente.",
+          { code: "request_cancelled" }
+        );
+      }
+
       throw new AteroApiError(
         "A API demorou para responder.",
         { code: "timeout" }
@@ -121,6 +148,10 @@ async function requestJson(
     );
   } finally {
     window.clearTimeout(timeoutId);
+    signal?.removeEventListener(
+      "abort",
+      abortFromCaller
+    );
   }
 }
 
@@ -174,12 +205,18 @@ export async function calculateGraph(graph) {
 }
 
 
-export async function calculatePlot(plotRequest) {
+export async function calculatePlot(
+  plotRequest,
+  {
+    signal = null
+  } = {}
+) {
   const data = await requestJson(
     "/calc/v1/plot",
     {
       method: "POST",
-      body: plotRequest
+      body: plotRequest,
+      signal
     }
   );
 
