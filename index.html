@@ -5,22 +5,43 @@
 >
   <head>
     <meta charset="UTF-8">
-  
+
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     >
-  
+
+    <meta
+      name="description"
+      content="Atero Calc — cálculos rápidos e sistemas de fórmulas interconectadas."
+    >
+
+    <meta
+      name="theme-color"
+      content="#ffffff"
+    >
+
     <title>Atero Calc</title>
-  
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="assets/logos/calc.png"
+    >
+
     <link
       rel="stylesheet"
       href="css/access-guard.css?v=1"
     >
-  
+
     <link
       rel="stylesheet"
-      href="css/calculator.css?v=1"
+      href="css/calculator.css?v=2"
+    >
+
+    <link
+      rel="stylesheet"
+      href="css/canvas.css?v=1"
     >
   </head>
 
@@ -60,91 +81,320 @@
           <span>Atero Calc</span>
         </a>
 
+        <nav
+          class="app-mode-tabs"
+          aria-label="Modos do Atero Calc"
+        >
+          <button
+            class="app-mode-tab is-active"
+            type="button"
+            data-app-view="calculator"
+            aria-controls="calculator-view"
+            aria-selected="true"
+          >
+            Calculadora
+          </button>
+
+          <button
+            class="app-mode-tab"
+            type="button"
+            data-app-view="canvas"
+            aria-controls="canvas-view"
+            aria-selected="false"
+          >
+            Canvas
+            <span class="app-mode-badge">Beta</span>
+          </button>
+        </nav>
+
         <div class="app-user">
           <span id="user-name"></span>
 
-          <button
-            type="button"
-            id="settings-button"
-            aria-label="Abrir configurações"
+          <a
+            class="app-settings-link"
+            href="https://atero.space/configuracoes.html"
           >
             Configurações
-          </button>
+          </a>
         </div>
       </header>
 
-      <main class="calculator-workspace">
+      <main class="app-main">
         <section
-          class="calculator"
-          aria-label="Calculadora"
+          class="app-view calculator-workspace"
+          id="calculator-view"
+          data-view="calculator"
         >
-          <div class="calculator-display">
-            <label
-              class="sr-only"
-              for="expression-input"
-            >
-              Expressão matemática
-            </label>
+          <section
+            class="calculator"
+            aria-label="Calculadora"
+          >
+            <div class="calculator-display">
+              <label
+                class="sr-only"
+                for="expression-input"
+              >
+                Expressão matemática
+              </label>
 
-            <input
-              id="expression-input"
-              type="text"
-              inputmode="decimal"
-              autocomplete="off"
-              spellcheck="false"
-              placeholder="Digite uma expressão"
-              maxlength="500"
-            >
+              <input
+                id="expression-input"
+                type="text"
+                inputmode="decimal"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="Digite uma expressão"
+                maxlength="500"
+              >
 
-            <output
-              id="calculation-result"
-              aria-live="polite"
-            >
-              0
-            </output>
-          </div>
+              <output
+                id="calculation-result"
+                aria-live="polite"
+              >
+                0
+              </output>
+            </div>
 
-          <div class="calculator-actions">
-            <button
-              id="clear-button"
-              type="button"
-            >
-              Limpar
-            </button>
+            <div class="calculator-actions">
+              <button
+                id="clear-button"
+                type="button"
+              >
+                Limpar
+              </button>
 
-            <button
-              id="calculate-button"
-              type="button"
-            >
-              Calcular
-            </button>
-          </div>
+              <button
+                id="calculate-button"
+                type="button"
+              >
+                Calcular
+              </button>
+            </div>
 
-          <p
-            id="calculation-error"
-            class="calculator-error"
-            role="alert"
-            hidden
-          ></p>
+            <p
+              id="calculation-error"
+              class="calculator-error"
+              role="alert"
+              hidden
+            ></p>
+          </section>
+
+          <aside
+            class="history-panel"
+            aria-label="Histórico de cálculos"
+          >
+            <div class="history-header">
+              <h2>Histórico</h2>
+
+              <button
+                id="clear-history-button"
+                type="button"
+              >
+                Limpar
+              </button>
+            </div>
+
+            <ol id="history-list"></ol>
+          </aside>
         </section>
 
-        <aside
-          class="history-panel"
-          aria-label="Histórico de cálculos"
+        <section
+          class="app-view graph-view"
+          id="canvas-view"
+          data-view="canvas"
+          hidden
         >
-          <div class="history-header">
-            <h2>Histórico</h2>
+          <header class="graph-toolbar">
+            <div class="graph-toolbar-group">
+              <button
+                class="graph-button graph-button-primary"
+                id="add-variable-button"
+                type="button"
+              >
+                <span aria-hidden="true">＋</span>
+                Variável
+              </button>
 
-            <button
-              id="clear-history-button"
-              type="button"
+              <button
+                class="graph-button"
+                id="add-formula-button"
+                type="button"
+              >
+                <span aria-hidden="true">ƒ</span>
+                Fórmula
+              </button>
+            </div>
+
+            <div
+              class="graph-status"
+              id="graph-status"
+              role="status"
+              aria-live="polite"
             >
-              Limpar
-            </button>
-          </div>
+              Canvas salvo neste dispositivo.
+            </div>
 
-          <ol id="history-list"></ol>
-        </aside>
+            <div class="graph-toolbar-group graph-toolbar-group-end">
+              <button
+                class="graph-button graph-button-quiet"
+                id="fit-graph-button"
+                type="button"
+              >
+                Enquadrar
+              </button>
+
+              <button
+                class="graph-button graph-button-danger"
+                id="clear-graph-button"
+                type="button"
+              >
+                Limpar
+              </button>
+
+              <button
+                class="graph-button graph-button-primary"
+                id="calculate-graph-button"
+                type="button"
+              >
+                Calcular sistema
+              </button>
+            </div>
+          </header>
+
+          <div class="graph-layout">
+            <aside class="graph-sidebar">
+              <div class="graph-sidebar-section">
+                <span class="graph-sidebar-label">
+                  Canvas de fórmulas
+                </span>
+
+                <h1>
+                  Conecte valores e equações.
+                </h1>
+
+                <p>
+                  Crie variáveis, escreva fórmulas e arraste os pinos para definir o fluxo dos cálculos.
+                </p>
+              </div>
+
+              <dl class="graph-statistics">
+                <div>
+                  <dt>Nodes</dt>
+                  <dd id="graph-node-count">0</dd>
+                </div>
+
+                <div>
+                  <dt>Conexões</dt>
+                  <dd id="graph-connection-count">0</dd>
+                </div>
+              </dl>
+
+              <div class="graph-help">
+                <strong>Controles</strong>
+
+                <p>
+                  Arraste o fundo para mover o canvas. Use a roda para navegar e Ctrl + roda para ampliar.
+                </p>
+
+                <p>
+                  Arraste uma saída azul até uma entrada. Clique numa entrada conectada para desconectar.
+                </p>
+              </div>
+            </aside>
+
+            <div
+              class="graph-viewport"
+              id="graph-viewport"
+              tabindex="0"
+              aria-label="Editor visual de fórmulas"
+            >
+              <div
+                class="graph-empty-state"
+                id="graph-empty-state"
+              >
+                <span class="graph-empty-icon" aria-hidden="true">ƒ</span>
+
+                <strong>Comece com uma variável ou fórmula</strong>
+
+                <p>
+                  Os nodes podem ser movidos e conectados livremente.
+                </p>
+
+                <div class="graph-empty-actions">
+                  <button
+                    class="graph-button graph-button-primary"
+                    type="button"
+                    data-create-node="variable"
+                  >
+                    Criar variável
+                  </button>
+
+                  <button
+                    class="graph-button"
+                    type="button"
+                    data-create-node="formula"
+                  >
+                    Criar fórmula
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="graph-world"
+                id="graph-world"
+              >
+                <svg
+                  class="graph-connections"
+                  id="graph-connections"
+                  width="6000"
+                  height="4000"
+                  viewBox="0 0 6000 4000"
+                  aria-hidden="true"
+                >
+                  <g id="graph-connection-paths"></g>
+
+                  <path
+                    class="graph-connection graph-connection-preview"
+                    id="graph-connection-preview"
+                    d=""
+                    hidden
+                  ></path>
+                </svg>
+
+                <div
+                  class="graph-node-layer"
+                  id="graph-node-layer"
+                ></div>
+              </div>
+
+              <div class="graph-zoom-controls">
+                <button
+                  type="button"
+                  id="zoom-out-button"
+                  aria-label="Diminuir zoom"
+                >
+                  −
+                </button>
+
+                <button
+                  type="button"
+                  id="zoom-reset-button"
+                  aria-label="Restaurar zoom"
+                >
+                  <span id="zoom-value">100%</span>
+                </button>
+
+                <button
+                  type="button"
+                  id="zoom-in-button"
+                  aria-label="Aumentar zoom"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer class="app-footer">
@@ -156,9 +406,176 @@
       </footer>
     </div>
 
+    <dialog
+      class="graph-dialog"
+      id="variable-dialog"
+      aria-labelledby="variable-dialog-title"
+    >
+      <form id="variable-form">
+        <div class="graph-dialog-header">
+          <div>
+            <span class="graph-dialog-label">Node de entrada</span>
+            <h2 id="variable-dialog-title">Criar variável</h2>
+          </div>
+
+          <button
+            class="graph-dialog-close"
+            type="button"
+            data-close-dialog="variable-dialog"
+            aria-label="Fechar"
+          >
+            ×
+          </button>
+        </div>
+
+        <label class="graph-field">
+          <span>Nome</span>
+          <input
+            id="variable-name-input"
+            name="name"
+            type="text"
+            maxlength="80"
+            placeholder="Ex.: Massa"
+            autocomplete="off"
+            required
+          >
+        </label>
+
+        <label class="graph-field">
+          <span>Valor inicial</span>
+          <input
+            id="variable-value-input"
+            name="value"
+            type="text"
+            inputmode="decimal"
+            maxlength="200"
+            placeholder="Ex.: 1200"
+            autocomplete="off"
+            required
+          >
+        </label>
+
+        <p
+          class="graph-form-error"
+          id="variable-form-error"
+          role="alert"
+          hidden
+        ></p>
+
+        <div class="graph-dialog-actions">
+          <button
+            class="graph-button"
+            type="button"
+            data-close-dialog="variable-dialog"
+          >
+            Cancelar
+          </button>
+
+          <button
+            class="graph-button graph-button-primary"
+            type="submit"
+          >
+            Salvar variável
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog
+      class="graph-dialog graph-dialog-wide"
+      id="formula-dialog"
+      aria-labelledby="formula-dialog-title"
+    >
+      <form id="formula-form">
+        <div class="graph-dialog-header">
+          <div>
+            <span class="graph-dialog-label">Node de cálculo</span>
+            <h2 id="formula-dialog-title">Criar fórmula</h2>
+          </div>
+
+          <button
+            class="graph-dialog-close"
+            type="button"
+            data-close-dialog="formula-dialog"
+            aria-label="Fechar"
+          >
+            ×
+          </button>
+        </div>
+
+        <label class="graph-field">
+          <span>Título do node</span>
+          <input
+            id="formula-title-input"
+            name="title"
+            type="text"
+            maxlength="80"
+            placeholder="Ex.: Energia cinética"
+            autocomplete="off"
+          >
+        </label>
+
+        <label class="graph-field">
+          <span>Fórmula</span>
+          <textarea
+            id="formula-expression-input"
+            name="formula"
+            rows="4"
+            maxlength="500"
+            placeholder="Energia = 0.5 * massa * velocidade^2"
+            spellcheck="false"
+            required
+          ></textarea>
+        </label>
+
+        <p class="graph-field-hint">
+          Use nomes simples nas variáveis e escreva multiplicações com <code>*</code>. A saída pode aparecer antes do sinal de igual.
+        </p>
+
+        <div class="graph-detected-inputs">
+          <span>Entradas detectadas</span>
+          <div id="formula-input-preview">
+            Nenhuma entrada detectada.
+          </div>
+        </div>
+
+        <p
+          class="graph-form-error"
+          id="formula-form-error"
+          role="alert"
+          hidden
+        ></p>
+
+        <div class="graph-dialog-actions">
+          <button
+            class="graph-button"
+            type="button"
+            data-close-dialog="formula-dialog"
+          >
+            Cancelar
+          </button>
+
+          <button
+            class="graph-button graph-button-primary"
+            type="submit"
+          >
+            Salvar fórmula
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <div
+      class="graph-toast"
+      id="graph-toast"
+      role="status"
+      aria-live="polite"
+      hidden
+    ></div>
+
     <script
       type="module"
-      src="js/bootstrap.js?v=1"
+      src="js/bootstrap.js?v=2"
     ></script>
   </body>
 </html>
