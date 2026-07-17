@@ -33,11 +33,31 @@ const api = await readFile("js/api.js", "utf8");
 const plot = await readFile("js/plot.js", "utf8");
 
 assert.match(app, /iniciarGraph/);
+assert.match(app, /\.\/plot\.js\?v=2/);
 assert.match(app, /"plot"/);
 assert.match(api, /\/calc\/v1\/plot/);
+assert.match(api, /request_cancelled/);
+assert.match(api, /signal/);
 assert.match(plot, /calculatePlot/);
+assert.match(plot, /plotAbortController/);
+assert.match(plot, /isEditingExpression/);
+assert.match(plot, /TYPE_DEBOUNCE_MS/);
+assert.match(plot, /ZOOM_DEBOUNCE_MS/);
+assert.match(plot, /paddedViewport/);
 assert.match(plot, /ResizeObserver/);
 assert.match(plot, /pointerdown/);
 assert.match(plot, /wheel/);
+
+const inputHandler = plot.match(
+  /expressionList\.addEventListener\("input", event => \{([\s\S]*?)\n\}\);/
+)?.[1] || "";
+
+assert.ok(inputHandler, "Missing Graph expression input handler");
+assert.doesNotMatch(
+  inputHandler,
+  /renderExpressions\(/,
+  "Typing must not rebuild the expression list"
+);
+assert.match(inputHandler, /schedulePlot\(/);
 
 console.log("Frontend structure tests passed.");
