@@ -26,7 +26,7 @@ for (const id of [
 
 assert.match(html, /data-app-view="plot"/);
 assert.match(html, /css\/plot\.css\?v=1/);
-assert.match(html, /js\/bootstrap\.js\?v=3/);
+assert.match(html, /js\/bootstrap-v2\.js\?v=1/);
 
 const app = await readFile("js/app.js", "utf8");
 const api = await readFile("js/api.js", "utf8");
@@ -35,7 +35,7 @@ const model = await readFile("js/plot-model.js", "utf8");
 const renderer = await readFile("js/plot-renderer.js", "utf8");
 
 assert.match(app, /iniciarGraph/);
-assert.match(app, /\.\/plot-v2\.js\?v=1/);
+assert.match(app, /\.\/plot-v2\.js\?v=3/);
 assert.match(app, /"plot"/);
 assert.match(api, /\/calc\/v1\/plot/);
 assert.match(api, /request_cancelled/);

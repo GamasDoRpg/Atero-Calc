@@ -1,6 +1,6 @@
 import {
   calculatePlot
-} from "./api.js?v=4";
+} from "./api.js?v=5";
 
 import {
   MAX_EXPRESSIONS,
@@ -11,12 +11,12 @@ import {
   loadPlotState,
   normalizedPlotExpression,
   savePlotState
-} from "./plot-model.js?v=1";
+} from "./plot-model.js?v=2";
 
 import {
   PlotRenderer,
   formatAxisValue
-} from "./plot-renderer.js?v=1";
+} from "./plot-renderer.js?v=2";
 
 
 const TYPE_DEBOUNCE_MS = 520;

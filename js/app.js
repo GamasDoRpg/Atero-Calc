@@ -8,7 +8,7 @@ import {
 
 import {
   iniciarGraph
-} from "./plot-v2.js?v=2";
+} from "./plot-v2.js?v=3";
 
 
 const VIEW_STORAGE_KEY =
