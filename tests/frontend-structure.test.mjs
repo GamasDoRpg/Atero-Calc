@@ -30,26 +30,33 @@ assert.match(html, /js\/bootstrap\.js\?v=3/);
 
 const app = await readFile("js/app.js", "utf8");
 const api = await readFile("js/api.js", "utf8");
-const plot = await readFile("js/plot.js", "utf8");
+const controller = await readFile("js/plot-v2.js", "utf8");
+const model = await readFile("js/plot-model.js", "utf8");
+const renderer = await readFile("js/plot-renderer.js", "utf8");
 
 assert.match(app, /iniciarGraph/);
-assert.match(app, /\.\/plot\.js\?v=2/);
+assert.match(app, /\.\/plot-v2\.js\?v=1/);
 assert.match(app, /"plot"/);
 assert.match(api, /\/calc\/v1\/plot/);
 assert.match(api, /request_cancelled/);
 assert.match(api, /signal/);
-assert.match(plot, /calculatePlot/);
-assert.match(plot, /plotAbortController/);
-assert.match(plot, /isEditingExpression/);
-assert.match(plot, /TYPE_DEBOUNCE_MS/);
-assert.match(plot, /ZOOM_DEBOUNCE_MS/);
-assert.match(plot, /paddedViewport/);
-assert.match(plot, /ResizeObserver/);
-assert.match(plot, /pointerdown/);
-assert.match(plot, /wheel/);
+assert.match(controller, /calculatePlot/);
+assert.match(controller, /plotAbortController/);
+assert.match(controller, /isEditingExpression/);
+assert.match(controller, /TYPE_DEBOUNCE_MS/);
+assert.match(controller, /ZOOM_DEBOUNCE_MS/);
+assert.match(controller, /paddedViewport/);
+assert.match(controller, /ResizeObserver/);
+assert.match(controller, /pointerdown/);
+assert.match(controller, /wheel/);
+assert.match(model, /expressionMode/);
+assert.match(model, /identifier !== "y"/);
+assert.match(model, /x\^2 \+ y\^2 = 25/);
+assert.match(renderer, /class PlotRenderer/);
+assert.match(renderer, /drawCurves/);
 
-const inputHandler = plot.match(
-  /expressionList\.addEventListener\("input", event => \{([\s\S]*?)\n\}\);/
+const inputHandler = controller.match(
+  /expressionList\.addEventListener\("input", event => \{([\s\S]*?)\n  \}\);/
 )?.[1] || "";
 
 assert.ok(inputHandler, "Missing Graph expression input handler");
@@ -59,5 +66,6 @@ assert.doesNotMatch(
   "Typing must not rebuild the expression list"
 );
 assert.match(inputHandler, /schedulePlot\(/);
+assert.match(inputHandler, /updateExpressionMode\(/);
 
 console.log("Frontend structure tests passed.");
