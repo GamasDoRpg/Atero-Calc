@@ -72,6 +72,7 @@ export function normalizeExpression(value) {
     .replaceAll("×", "*")
     .replaceAll("·", "*")
     .replaceAll("÷", "/")
+    .replaceAll("−", "-")
     .replaceAll("²", "^2")
     .replaceAll("³", "^3")
     .replace(/(\d),(?=\d)/g, "$1.");
@@ -102,7 +103,12 @@ export function identifierFromLabel(
 
 export function extractIdentifiers(expression) {
   const normalized = normalizeExpression(expression);
-  const matches = normalized.match(IDENTIFIER_GLOBAL_PATTERN) || [];
+  const searchable = normalized.replace(
+    /\b(?:\d+(?:\.\d*)?|\.\d+)[eE][+-]?\d+\b/g,
+    "0"
+  );
+
+  const matches = searchable.match(IDENTIFIER_GLOBAL_PATTERN) || [];
   const identifiers = [];
   const seen = new Set();
 
