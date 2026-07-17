@@ -13,7 +13,7 @@
 
     <meta
       name="description"
-      content="Atero Calc — cálculos rápidos e sistemas de fórmulas interconectadas."
+      content="Atero Calc — cálculos rápidos, fórmulas interconectadas e gráficos matemáticos."
     >
 
     <meta
@@ -42,6 +42,11 @@
     <link
       rel="stylesheet"
       href="css/canvas.css?v=1"
+    >
+
+    <link
+      rel="stylesheet"
+      href="css/plot.css?v=1"
     >
   </head>
 
@@ -103,6 +108,17 @@
             aria-selected="false"
           >
             Canvas
+            <span class="app-mode-badge">Beta</span>
+          </button>
+
+          <button
+            class="app-mode-tab"
+            type="button"
+            data-app-view="plot"
+            aria-controls="plot-view"
+            aria-selected="false"
+          >
+            Graph
             <span class="app-mode-badge">Beta</span>
           </button>
         </nav>
@@ -395,6 +411,118 @@
             </div>
           </div>
         </section>
+
+        <section
+          class="app-view plot-view"
+          id="plot-view"
+          data-view="plot"
+          hidden
+        >
+          <div class="plot-shell">
+            <aside class="plot-sidebar">
+              <header class="plot-sidebar-header">
+                <div>
+                  <span class="plot-sidebar-label">
+                    Calculadora gráfica
+                  </span>
+
+                  <h1>Funções</h1>
+                </div>
+
+                <button
+                  class="plot-add-button"
+                  id="add-plot-expression-button"
+                  type="button"
+                  aria-label="Adicionar função"
+                  title="Adicionar função"
+                >
+                  +
+                </button>
+              </header>
+
+              <div
+                class="plot-expression-list"
+                id="plot-expression-list"
+              ></div>
+
+              <section
+                class="plot-parameters"
+                id="plot-parameters"
+                hidden
+              >
+                <div class="plot-section-heading">
+                  <strong>Parâmetros</strong>
+                  <span>Atualização automática</span>
+                </div>
+
+                <div
+                  class="plot-parameter-list"
+                  id="plot-parameter-list"
+                ></div>
+              </section>
+
+              <footer class="plot-sidebar-footer">
+                <label class="plot-angle-field">
+                  <span>Ângulos</span>
+
+                  <select id="plot-angle-mode">
+                    <option value="radians">Radianos</option>
+                    <option value="degrees">Graus</option>
+                  </select>
+                </label>
+
+                <label class="plot-grid-field">
+                  <input
+                    id="plot-grid-toggle"
+                    type="checkbox"
+                    checked
+                  >
+                  Grade
+                </label>
+              </footer>
+            </aside>
+
+            <div class="plot-stage">
+              <canvas
+                class="plot-canvas"
+                id="plot-canvas"
+                aria-label="Plano cartesiano interativo"
+              ></canvas>
+
+              <div class="plot-stage-summary">
+                <strong id="plot-function-count">1</strong>
+                funções visíveis
+              </div>
+
+              <div class="plot-stage-toolbar">
+                <button
+                  class="plot-stage-button"
+                  id="reset-plot-view-button"
+                  type="button"
+                >
+                  Redefinir vista
+                </button>
+              </div>
+
+              <div
+                class="plot-coordinate-readout"
+                id="plot-coordinate-readout"
+              >
+                Mova o cursor sobre o plano
+              </div>
+
+              <div
+                class="plot-status"
+                id="plot-status"
+                data-status="idle"
+                role="status"
+                aria-live="polite"
+              >
+                Preparando gráfico...
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer class="app-footer">
@@ -575,7 +703,7 @@
 
     <script
       type="module"
-      src="js/bootstrap.js?v=2"
+      src="js/bootstrap.js?v=3"
     ></script>
   </body>
 </html>
