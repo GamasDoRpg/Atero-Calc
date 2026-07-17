@@ -4,28 +4,22 @@ import {
 
 
 async function iniciar() {
-  const acesso =
-    await exigirAplicativoAtero({
-      appId: "calc",
-      nomeFallback:
-        "Atero Calc"
-    });
+  const acesso = await exigirAplicativoAtero({
+    appId: "calc",
+    nomeFallback: "Atero Calc"
+  });
 
   if (!acesso) {
     return;
   }
 
-  const modulo =
-    await import(
-      "./app.js?v=1"
-    );
+  const modulo = await import(
+    "./app.js?v=2"
+  );
 
   await modulo.iniciarAplicativo({
-    usuario:
-      acesso.user,
-
-    aplicativo:
-      acesso.app
+    usuario: acesso.user,
+    aplicativo: acesso.app
   });
 }
 
