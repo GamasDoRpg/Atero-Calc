@@ -42,6 +42,95 @@ const RESERVED_IDENTIFIERS = new Set([
   "yield"
 ]);
 
+const BUILTIN_FUNCTION_IDENTIFIERS = new Set([
+  "abs",
+  "acos",
+  "acosh",
+  "arg",
+  "asin",
+  "asinh",
+  "atan",
+  "atan2",
+  "atanh",
+  "avg",
+  "cbrt",
+  "ceil",
+  "cis",
+  "clamp",
+  "comb",
+  "conj",
+  "conjugate",
+  "cos",
+  "cosh",
+  "cot",
+  "csc",
+  "cube",
+  "degrees",
+  "erf",
+  "erfc",
+  "exp",
+  "factorial",
+  "floor",
+  "gamma",
+  "gcd",
+  "hypot",
+  "im",
+  "imag",
+  "lcm",
+  "lgamma",
+  "ln",
+  "log",
+  "log10",
+  "log2",
+  "magnitude",
+  "max",
+  "mean",
+  "min",
+  "norm",
+  "perm",
+  "phase",
+  "pow",
+  "prod",
+  "product",
+  "radians",
+  "re",
+  "real",
+  "rect",
+  "root",
+  "round",
+  "sec",
+  "sign",
+  "sin",
+  "sinh",
+  "sqrt",
+  "square",
+  "sum",
+  "tan",
+  "tanh",
+  "trunc"
+]);
+
+const BUILTIN_CONSTANT_IDENTIFIERS = new Set([
+  "deg",
+  "e",
+  "golden",
+  "j",
+  "ln10",
+  "ln2",
+  "phi",
+  "pi",
+  "sqrt2",
+  "tau"
+]);
+
+
+function isBuiltinIdentifier(identifier) {
+  return (
+    BUILTIN_FUNCTION_IDENTIFIERS.has(identifier) ||
+    BUILTIN_CONSTANT_IDENTIFIERS.has(identifier)
+  );
+}
+
 
 export class GraphModelError extends Error {
   constructor(message, code = "invalid_graph") {
@@ -120,6 +209,10 @@ export function extractIdentifiers(expression) {
       );
     }
 
+    if (isBuiltinIdentifier(identifier)) {
+      continue;
+    }
+
     if (!seen.has(identifier)) {
       seen.add(identifier);
       identifiers.push(identifier);
@@ -164,9 +257,12 @@ export function parseFormulaDefinition(formulaText) {
       );
     }
 
-    if (RESERVED_IDENTIFIERS.has(left)) {
+    if (
+      RESERVED_IDENTIFIERS.has(left) ||
+      isBuiltinIdentifier(left)
+    ) {
       throw new GraphModelError(
-        `“${left}” é uma palavra reservada e não pode ser usada como saída.`,
+        `“${left}” é um nome reservado e não pode ser usado como saída.`,
         "reserved_output_identifier"
       );
     }
