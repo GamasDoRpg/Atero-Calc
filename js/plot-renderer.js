@@ -57,6 +57,35 @@ export class PlotRenderer {
   }
 
 
+  enforceAspectRatio(width, height) {
+    if (width <= 0 || height <= 0) {
+      return;
+    }
+
+    const viewport = this.state.viewport;
+    const xCenter = (viewport.xMin + viewport.xMax) / 2;
+    const yCenter = (viewport.yMin + viewport.yMax) / 2;
+    const xSpan = clampSpan(viewport.xMax - viewport.xMin);
+    const ySpan = clampSpan(viewport.yMax - viewport.yMin);
+    const canvasAspect = width / height;
+    const viewportAspect = xSpan / ySpan;
+
+    let correctedXSpan = xSpan;
+    let correctedYSpan = ySpan;
+
+    if (viewportAspect > canvasAspect) {
+      correctedYSpan = clampSpan(xSpan / canvasAspect);
+    } else {
+      correctedXSpan = clampSpan(ySpan * canvasAspect);
+    }
+
+    viewport.xMin = xCenter - correctedXSpan / 2;
+    viewport.xMax = xCenter + correctedXSpan / 2;
+    viewport.yMin = yCenter - correctedYSpan / 2;
+    viewport.yMax = yCenter + correctedYSpan / 2;
+  }
+
+
   metrics() {
     const rectangle = this.canvas.getBoundingClientRect();
     const width = Math.max(1, rectangle.width);
@@ -74,6 +103,7 @@ export class PlotRenderer {
     }
 
     this.context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.enforceAspectRatio(width, height);
 
     return { width, height, rectangle };
   }
@@ -87,9 +117,14 @@ export class PlotRenderer {
       yMax
     } = this.state.viewport;
 
+    const pixelsPerUnit = Math.min(
+      width / (xMax - xMin),
+      height / (yMax - yMin)
+    );
+
     return {
-      x: (x - xMin) / (xMax - xMin) * width,
-      y: (yMax - y) / (yMax - yMin) * height
+      x: (x - xMin) * pixelsPerUnit,
+      y: (yMax - y) * pixelsPerUnit
     };
   }
 
@@ -102,9 +137,14 @@ export class PlotRenderer {
       yMax
     } = this.state.viewport;
 
+    const pixelsPerUnit = Math.min(
+      width / (xMax - xMin),
+      height / (yMax - yMin)
+    );
+
     return {
-      x: xMin + x / width * (xMax - xMin),
-      y: yMax - y / height * (yMax - yMin)
+      x: xMin + x / pixelsPerUnit,
+      y: yMax - y / pixelsPerUnit
     };
   }
 
@@ -124,8 +164,12 @@ export class PlotRenderer {
   panFrom(startViewport, deltaX, deltaY, width, height) {
     const xSpan = startViewport.xMax - startViewport.xMin;
     const ySpan = startViewport.yMax - startViewport.yMin;
-    const xShift = -deltaX / width * xSpan;
-    const yShift = deltaY / height * ySpan;
+    const pixelsPerUnit = Math.min(
+      width / xSpan,
+      height / ySpan
+    );
+    const xShift = -deltaX / pixelsPerUnit;
+    const yShift = deltaY / pixelsPerUnit;
 
     this.state.viewport = {
       xMin: startViewport.xMin + xShift,
@@ -160,6 +204,7 @@ export class PlotRenderer {
     this.state.viewport.xMax = this.state.viewport.xMin + newXSpan;
     this.state.viewport.yMax = anchor.y + yRatio * newYSpan;
     this.state.viewport.yMin = this.state.viewport.yMax - newYSpan;
+    this.enforceAspectRatio(width, height);
   }
 
 
@@ -170,6 +215,12 @@ export class PlotRenderer {
       yMin: -6,
       yMax: 6
     };
+
+    const rectangle = this.canvas.getBoundingClientRect();
+    this.enforceAspectRatio(
+      Math.max(1, rectangle.width),
+      Math.max(1, rectangle.height)
+    );
   }
 
 
