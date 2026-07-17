@@ -1,15 +1,19 @@
-name: Graph model tests
+name: Frontend tests
 
 on:
   push:
     paths:
-      - "js/graph-model.js"
-      - "tests/graph-model.test.mjs"
+      - "index.html"
+      - "css/**"
+      - "js/**"
+      - "tests/**"
       - ".github/workflows/graph-model-tests.yml"
   pull_request:
     paths:
-      - "js/graph-model.js"
-      - "tests/graph-model.test.mjs"
+      - "index.html"
+      - "css/**"
+      - "js/**"
+      - "tests/**"
       - ".github/workflows/graph-model-tests.yml"
 
 permissions:
@@ -28,8 +32,17 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Prepare ES module copy
+      - name: Check JavaScript syntax
+        run: |
+          for file in js/*.js; do
+            node --check "$file"
+          done
+
+      - name: Prepare graph model ES module copy
         run: cp js/graph-model.js /tmp/atero-graph-model.mjs
 
       - name: Run graph model tests
         run: node tests/graph-model.test.mjs
+
+      - name: Run frontend structure tests
+        run: node tests/frontend-structure.test.mjs
