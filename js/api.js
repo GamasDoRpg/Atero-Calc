@@ -172,3 +172,28 @@ export async function calculateGraph(graph) {
 
   return data;
 }
+
+
+export async function calculatePlot(plotRequest) {
+  const data = await requestJson(
+    "/calc/v1/plot",
+    {
+      method: "POST",
+      body: plotRequest
+    }
+  );
+
+  if (
+    !data ||
+    typeof data.success !== "boolean" ||
+    !Number.isInteger(data.samples) ||
+    !Array.isArray(data.plots)
+  ) {
+    throw new AteroApiError(
+      "A API retornou dados de gráfico inválidos.",
+      { code: "invalid_plot_response" }
+    );
+  }
+
+  return data;
+}
